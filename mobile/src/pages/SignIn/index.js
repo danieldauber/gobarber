@@ -1,13 +1,20 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
+
+import Background from '~/components/Background';
+import Input from '~/components/Input';
 
 // import { Container } from './styles';
 
 export default function SignIn() {
   return (
-    <View>
+    <Background>
       <Text>SigIn</Text>
-
-    </View>
+      <Input
+        style={{ marginTop: 30 }}
+        icon="call"
+        placeholder="Digite seu nome"
+      />
+    </Background>
   );
 }
