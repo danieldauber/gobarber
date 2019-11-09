@@ -9,7 +9,6 @@ import Input from '~/components/Input';
 export default function SignIn() {
   return (
     <Background>
-      <Text>SigIn</Text>
       <Input
         style={{ marginTop: 30 }}
         icon="call"
