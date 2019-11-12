@@ -23,17 +23,17 @@ class ScheduleController {
         date: {
           [Op.between]: [startOfDay(parsedDate), endOfDay(parsedDate)],
         },
-        include: [
-          {
-            model: User,
-            as: 'user',
-            attribute: ['name'],
-          },
-        ],
       },
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attribute: ['name'],
+        },
+      ],
     });
 
-    return res.json({ appointments });
+    return res.json(appointments);
   }
 }
 
