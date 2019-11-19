@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { withNavigationFocus } from 'react-navigation';
+
 import api from '~/services/api';
 import Background from '~/components/Background';
 import Appointment from '~/components/Appointment';
 
 import { Container, Title, List } from './styles';
 
-export default function Dashboard() {
+function Dashboard({ isFocused }) {
   const [appointments, setApppoinments] = useState([]);
 
+  async function loadAppoinments() {
+    const response = await api.get('appointments');
+
+    setApppoinments(response.data);
+  }
+
   useEffect(() => {
-    async function loadAppoinments() {
-      const response = await api.get('appointments');
-
-      setApppoinments(response.data);
+    if (isFocused) {
+      loadAppoinments();
     }
-
-    loadAppoinments();
-  }, []);
+  }, [isFocused]);
 
   async function handleCancel(id) {
     const response = await api.delete(`appointments/${id}`);
@@ -26,9 +30,9 @@ export default function Dashboard() {
       appointments.map(appointment =>
         appointment.id === id
           ? {
-              ...appointment,
-              canceled_at: response.data.canceled_at,
-            }
+            ...appointment,
+            canceled_at: response.data.canceled_at,
+          }
           : appointment
       )
     );
@@ -56,3 +60,5 @@ Dashboard.navigationOptions = {
     <Icon name="event" size={20} color={tintColor} />
   ),
 };
+
+export default withNavigationFocus(Dashboard);
